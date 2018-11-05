@@ -73,19 +73,10 @@ final class UnsafeUtil {
     UNSAFE.putByte(target, offset, value);
   }
 
-  // BEGIN Android-removed
-  // This method doesn't exist in sun.misc.Unsafe in Android, and leaving the
-  // dangling reference causes soft-verification errors when a jarjar'd version
-  // of libprotobuf-java-lite is included in the bootclasspath:
-  //  Soft verification failures in void com.android.framework.protobuf.UnsafeUtil.copyMemory(byte[], long, byte[], long, long)
-  //  void com.android.framework.protobuf.UnsafeUtil.copyMemory(byte[], long, byte[], long, long): [0x7] couldn't find method sun.misc.Unsafe.copyMemory ([BJ[BJJ)V
-  // This method is unused in the current open-source implementation of the
-  // protobuf lite runtime, so just remove it for now.
-  //static void copyMemory(
-  //    byte[] src, long srcOffset, byte[] target, long targetOffset, long length) {
-  //  UNSAFE.copyMemory(src, srcOffset, target, targetOffset, length);
-  //}
-  // END Android-removed
+  static void copyMemory(
+      byte[] src, long srcOffset, byte[] target, long targetOffset, long length) {
+    UNSAFE.copyMemory(src, srcOffset, target, targetOffset, length);
+  }
 
   static long getLong(byte[] target, long offset) {
     return UNSAFE.getLong(target, offset);
